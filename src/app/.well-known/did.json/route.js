@@ -1,4 +1,4 @@
-import did from "@/../DID.mjs"
+import did from "@/../did.mjs"
 
 export const dynamic = "force-static"
 
