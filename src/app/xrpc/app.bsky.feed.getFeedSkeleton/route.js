@@ -13,13 +13,16 @@ export async function GET({ nextUrl: { searchParams } }) {
 		password: process.env.BSKY_PASSWORD
 	})
 
-	return Response.json(
-		(
-			await agent.getAuthorFeed({
-				actor: "bsky.app",
-				cursor: cursor ?? "",
-				limit: limit ?? 30
-			})
-		).data
-	)
+	const { feed, cursor: newCursor } = (
+		await agent.getAuthorFeed({
+			actor: "bsky.app",
+			cursor: cursor ?? "",
+			limit: limit ?? 30
+		})
+	).data
+
+	return Response.json({
+		feed: feed.map(({ post: { uri } }) => ({ post: uri })),
+		newCursor
+	})
 }
