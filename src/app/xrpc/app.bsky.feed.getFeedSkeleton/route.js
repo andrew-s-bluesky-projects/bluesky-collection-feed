@@ -4,6 +4,7 @@ import { AtpAgent } from "@atproto/api"
 
 export async function GET({ nextUrl: { searchParams } }) {
 	const cursor = searchParams.get("cursor")
+	const limit = searchParams.get("limit")
 
 	const agent = new AtpAgent({ service: "https://bsky.social" })
 
@@ -16,7 +17,8 @@ export async function GET({ nextUrl: { searchParams } }) {
 		(
 			await agent.getAuthorFeed({
 				actor: "bsky.app",
-				cursor
+				cursor,
+				limit
 			})
 		).data
 	)
