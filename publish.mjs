@@ -9,7 +9,7 @@ async function run() {
 		password: process.env.BSKY_PASSWORD
 	})
 
-	await agent.com.atproto.repo.putRecord({
+	const record = {
 		repo: agent.session?.did ?? "",
 		collection: "app.bsky.feed.generator",
 		rkey: "next-test",
@@ -20,7 +20,11 @@ async function run() {
 			// avatar: avatarRef,
 			createdAt: new Date().toISOString()
 		}
-	})
+	}
+
+	console.log(record)
+
+	await agent.com.atproto.repo.putRecord(record)
 }
 
 run()
