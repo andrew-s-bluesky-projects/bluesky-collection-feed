@@ -27,6 +27,6 @@ export async function GET({ nextUrl: { searchParams } }) {
 
 	return Response.json({
 		feed: feed.map(({ post: { uri } }) => ({ post: uri })),
-		newCursor
+		cursor: newCursor
 	})
 }
