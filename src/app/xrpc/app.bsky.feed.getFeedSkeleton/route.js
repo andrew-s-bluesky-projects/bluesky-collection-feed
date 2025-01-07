@@ -17,8 +17,8 @@ export async function GET({ nextUrl: { searchParams } }) {
 		(
 			await agent.getAuthorFeed({
 				actor: "bsky.app",
-				cursor,
-				limit
+				cursor: cursor ?? "",
+				limit: limit ?? 30
 			})
 		).data
 	)
