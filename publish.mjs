@@ -1,5 +1,5 @@
 import { AtpAgent, BlobRef } from "@atproto/api"
-import did from "./DID.mjs"
+import did from "./did.mjs"
 
 async function run() {
 	const agent = new AtpAgent({ service: "https://bsky.social" })
