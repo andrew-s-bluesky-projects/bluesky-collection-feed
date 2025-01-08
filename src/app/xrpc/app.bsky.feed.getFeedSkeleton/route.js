@@ -1,6 +1,5 @@
-import did from "../../../../did.mjs"
-import escape from "escape-string-regexp"
 import { AtpAgent } from "@atproto/api"
+import yn from "yn"
 
 export async function GET({ nextUrl: { searchParams } }) {
 	const cursor = searchParams.get("cursor")
@@ -26,8 +25,6 @@ export async function GET({ nextUrl: { searchParams } }) {
 		feed: (
 			await Promise.all(
 				feed.map(async ({ post }) => {
-					console.log(post.labels)
-
 					const { uri } = post
 					const labelValues = post.labels.map(({ val }) => val)
 
@@ -39,10 +36,11 @@ export async function GET({ nextUrl: { searchParams } }) {
 							.toLowerCase()
 							.includes(process.env.COLLECTION_TAG) ||
 						// or
-						// is labeled
-						labelValues.includes("porn") ||
-						labelValues.includes("sexual") ||
-						labelValues.includes("nudity") ||
+						// is labeled (if enabled)
+						(yn(process.env.COLLECT_NSFW) &&
+							(labelValues.includes("porn") ||
+								labelValues.includes("sexual") ||
+								labelValues.includes("nudity"))) ||
 						// or
 						// has self-replies with tag
 						(await agent.getPostThread({ uri })).data.thread.replies
