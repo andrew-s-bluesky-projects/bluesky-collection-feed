@@ -22,7 +22,27 @@ export async function GET({ nextUrl: { searchParams } }) {
 	).data
 
 	return Response.json({
-		feed: feed.map(({ post: { uri } }) => ({ post: uri })),
-		cursor: newCursor
+		cursor: newCursor,
+		feed: (
+			await Promise.all(
+				feed.map(async ({ post: { uri } }) => {
+					const candidate = { post: uri }
+
+					const qualifyingReplies = (
+						await agent.getPostThread({ uri })
+					).data.thread.replies.filter(
+						({
+							post: {
+								author: { handle },
+								record: { text }
+							}
+						}) => text == "yes" // handle == process.env.BSKY_HANDLE
+					)
+
+					if (qualifyingReplies) return candidate
+					else return null
+				})
+			)
+		).filter(post => post !== null)
 	})
 }
