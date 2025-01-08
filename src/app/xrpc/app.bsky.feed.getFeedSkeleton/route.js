@@ -16,7 +16,7 @@ export async function GET({ nextUrl: { searchParams } }) {
 	const {
 		data: { feed, cursor: newCursor }
 	} = await agent.getAuthorFeed({
-		actor: "bsky.app",
+		actor: process.env.BSKY_HANDLE,
 		cursor: cursor ?? "",
 		limit: limit ?? 30
 	})
@@ -25,21 +25,42 @@ export async function GET({ nextUrl: { searchParams } }) {
 		cursor: newCursor,
 		feed: (
 			await Promise.all(
-				feed.map(async ({ post: { uri } }) => {
+				feed.map(async ({ post }) => {
+					console.log(post.labels)
+
+					const { uri } = post
+					const labelValues = post.labels.map(({ val }) => val)
+
 					const candidate = { post: uri }
 
-					const qualifyingReplies = (
-						await agent.getPostThread({ uri })
-					).data.thread.replies.filter(
-						({
-							post: {
-								author: { handle },
-								record: { text }
-							}
-						}) => text == "yes" // handle == process.env.BSKY_HANDLE
+					if (
+						// has tag
+						post.record.text
+							.toLowerCase()
+							.includes(process.env.COLLECTION_TAG) ||
+						// or
+						// is labeled
+						labelValues.includes("porn") ||
+						labelValues.includes("sexual") ||
+						labelValues.includes("nudity") ||
+						// or
+						// has self-replies with tag
+						(await agent.getPostThread({ uri })).data.thread.replies
+							.filter(post => "post" in post)
+							.filter(
+								({
+									post: {
+										author: { handle },
+										record: { text }
+									}
+								}) =>
+									handle == process.env.BSKY_HANDLE &&
+									text
+										.toLowerCase()
+										.includes(process.env.COLLECTION_TAG)
+							).length != 0
 					)
-
-					if (qualifyingReplies) return candidate
+						return candidate
 					else return null
 				})
 			)
