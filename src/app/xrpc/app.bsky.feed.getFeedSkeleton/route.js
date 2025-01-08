@@ -13,7 +13,9 @@ export async function GET({ nextUrl: { searchParams } }) {
 		password: process.env.BSKY_PASSWORD
 	})
 
-	const { feed, cursor: newCursor } = (
+	const {
+		data: { feed, cursor: newCursor }
+	} = (
 		await agent.getAuthorFeed({
 			actor: "bsky.app",
 			cursor: cursor ?? "",
