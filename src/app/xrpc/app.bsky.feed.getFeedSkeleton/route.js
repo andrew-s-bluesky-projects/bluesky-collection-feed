@@ -15,13 +15,11 @@ export async function GET({ nextUrl: { searchParams } }) {
 
 	const {
 		data: { feed, cursor: newCursor }
-	} = (
-		await agent.getAuthorFeed({
-			actor: "bsky.app",
-			cursor: cursor ?? "",
-			limit: limit ?? 30
-		})
-	).data
+	} = await agent.getAuthorFeed({
+		actor: "bsky.app",
+		cursor: cursor ?? "",
+		limit: limit ?? 30
+	})
 
 	return Response.json({
 		cursor: newCursor,
