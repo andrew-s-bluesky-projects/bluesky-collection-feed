@@ -1,36 +1,17 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+This is a rudimentary [BlueSky feed generator](https://docs.bsky.app/docs/starter-templates/custom-feeds) to make Tumblr-style tag collections.
 
-## Getting Started
+This isn't a fork of [bluesky-social/feed-generator](https://github.com/bluesky-social/feed-generator); this is written from scratch using [Next.js](https://nextjs.org/)! (None of that React nonsense, though.)
 
-First, run the development server:
+# getting started
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fandrew-s-bluesky-projects%2Fbluesky-collection-feed%2F&env=BSKY_HANDLE,BSKY_PASSWORD,COLLECTION_TAG,COLLECT_NSFW,FEED_NAME,FEED_DESCRIPTION,RECORD_KEY&envDescription=Feed%20configuration.&envLink=https%3A%2F%2Fgithub.com%2Fsolanto%2Fnext-atproto-feed%23readme)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. [Deploy](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fandrew-s-bluesky-projects%2Fbluesky-collection-feed%2F&env=BSKY_HANDLE,BSKY_PASSWORD,COLLECTION_TAG,COLLECT_NSFW,FEED_NAME,FEED_DESCRIPTION,RECORD_KEY&envDescription=Feed%20configuration.&envLink=https%3A%2F%2Fgithub.com%2Fsolanto%2Fnext-atproto-feed%23readme) a fork of this project to Vercel.
+2. When prompted, complete configuration:
+   - BSKY_HANDLE: your full handle (ex: "abc.bsky.social")
+   - BSKY_PASSWORD: an [app password](https://bsky.app/settings/app-passwords) to your account
+   - COLLECTION_TAG: text that gets any post into the collection (ex: something hashtag-like like "!#hi" or a trigger emoji like "📌")
+   - COLLECT_NSFW: `true` or `false` as to whether NFSW-labeled content automatically goes into the collection
+   - FEED_NAME: a name for your collection feed
+   - FEED_DESCRIPTION: a description for your collection feed
+   - RECORD_KEY: an arbitrary internal identifier, which must be unique among your feeds (ex: `feed-1`)
