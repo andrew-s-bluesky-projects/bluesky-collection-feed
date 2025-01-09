@@ -12,11 +12,11 @@ async function run() {
 	const record = {
 		repo: agent.session?.did ?? "",
 		collection: "app.bsky.feed.generator",
-		rkey: "next-test",
+		rkey: process.env.RECORD_KEY,
 		record: {
 			did,
-			displayName: "next test",
-			description: "test description",
+			displayName: process.env.FEED_NAME,
+			description: process.env.FEED_DESCRIPTION,
 			// avatar: avatarRef,
 			createdAt: new Date().toISOString()
 		}
